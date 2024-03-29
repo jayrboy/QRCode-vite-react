@@ -7,14 +7,11 @@ import { AiFillPicture } from 'react-icons/ai'
 import QRCode from 'react-qr-code'
 
 const Item = (props) => {
-  const { data, deleteTask, editTask, number } = props
+  const { number, data, deleteTask, editTask, updateClicked } = props
   const [url, setUrl] = useState('')
   const [isQrOpen, setQrOpen] = useState(false)
-  let [clicked, setClicked] = useState(data.clicked)
 
   const defaultProxy = 'https://localhost:5173'
-
-  useEffect(() => {}, [clicked])
 
   const onOpenQr = (url) => {
     setUrl(url)
@@ -43,7 +40,7 @@ const Item = (props) => {
               <br />
               <button
                 className="btn btn-sm btn-outline-info"
-                onClick={() => setClicked((data.clicked += 1))}
+                onClick={() => updateClicked(data.id)}
               >
                 {defaultProxy}/{data.short_url}
               </button>
@@ -51,22 +48,23 @@ const Item = (props) => {
               clicked: {data.clicked}
             </p>
           </div>
-          <div className="col-3">
+          <div className="col-3 d-flex flex-column justify-content-center align-items-center">
             <AiFillPicture
-              className="icon"
-              size={25}
+              className="icon mb-3"
+              size={40}
               color="blue"
-              onClick={() => onOpenQr(`${defaultProxy}/${data.short_url}`)}
+              // onClick={() => onOpenQr(`${defaultProxy}/${data.short_url}`)}
+              onClick={() => onOpenQr(data.full_url)}
             />
             <BiEdit
-              className="icon"
-              size={25}
+              className="icon mb-3"
+              size={40}
               color="orange"
               onClick={() => editTask(data.id)}
             />
             <BiTrash
-              className="icon"
-              size={25}
+              className="icon mb-auto"
+              size={40}
               color="red"
               onClick={() => deleteTask(data.id)}
             />
